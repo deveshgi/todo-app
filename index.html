@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TODO — Task Manager</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/ti-icons@0.1.2/css/themify-icons.min.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+  <div class="app">
+
+    <header>
+      <div class="logo">
+        <div class="logo-icon">✦</div>
+        <div class="logo-text">
+          <h1>TASK <span>flow</span></h1>
+          <p>// productivity terminal</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <span class="hint" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);">
+          <kbd class="kbd">?</kbd>
+          shortcuts
+        </span>
+
+        <button class="icon-btn" id="themeBtn" title="toogle">🌙</button>
+        <button class="icon-btn" id="exportBtn"><i class="ti-download"></i></button>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="stat s-total">
+        <div class="stat-num" id="statTotal">0</div>
+        <div class="stat-label">Total Tasks</div>
+      </div>
+      <div class="stat s-active">
+        <div class="stat-num" id="statActive">0</div>
+        <div class="stat-label">Active</div>
+      </div>
+      <div class="stat s-done">
+        <div class="stat-num" id="statDone">0</div>
+        <div class="stat-label">Completed</div>
+      </div>
+      <div class="stat s-high">
+        <div class="stat-num" id="statHigh">0</div>
+        <div class="stat-label">High Priority</div>
+      </div>
+    </div>
+
+    <div class="progress-wrap">
+      <span class="progress-label">Progress</span>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <span class="progress-pct" id="progressPct">0%</span>
+    </div>
+
+    <div class="input-card">
+      <div class="input-row">
+        <input class="main-input" id="taskInput" type="text" placeholder="Add a new task… (Enter to submit)"
+          autocomplete="off" />
+        <button class="add-btn" id="addBtn">+ Add Task</button>
+      </div>
+      <div class="meta-row">
+        <select class="meta-select" id="prioritySelect">
+          <option value="low">🟢 Low</option>
+          <option value="medium" selected>🟡 Medium</option>
+          <option value="high">🔴 High</option>
+        </select>
+        <select class="meta-select" id="categorySelect">
+          <option value="work">💼 Work</option>
+          <option value="personal">🏠 Personal</option>
+          <option value="study">📚 Study</option>
+          <option value="health">❤️ Health</option>
+          <option value="other">📌 Other</option>
+        </select>
+        <input class="meta-input" id="dueDateInput" type="date" />
+      </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
