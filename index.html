@@ -83,7 +83,94 @@
       </div>
     </div>
 
+    <div class="toolbar">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" />
+          <path d="m21 21-4.35-4.35" />
+        </svg>
+        <input class="search-input" id="searchInput" type="text" placeholder="Search tasks…" />
+      </div>
+      <div class="filter-tabs">
+        <button class="filter-tab active" data-filter="all">All</button>
+        <button class="filter-tab" data-filter="active">Active</button>
+        <button class="filter-tab" data-filter="completed">Done</button>
+        <button class="filter-tab" data-filter="high">🔴 High</button>
+      </div>
+      <select class="sort-select" id="sortSelect">
+        <option value="newest">Newest</option>
+        <option value="oldest">Oldest</option>
+        <option value="priority">Priority</option>
+        <option value="due">Due Date</option>
+        <option value="alpha">A → Z</option>
+      </select>
+    </div>
+
+    <div class="bulk-bar" id="bulkBar">
+      <span id="bulkCount">0 selected</span>
+      <button class="bulk-action-btn" id="bulkComplete">✓ Complete</button>
+      <button class="bulk-action-btn" id="bulkUncomplete">↩ Undo</button>
+      <button class="bulk-action-btn danger" id="bulkDelete">🗑 Delete</button>
+      <button class="bulk-action-btn" id="bulkDeselect">✕ Cancel</button>
+    </div>
+
+    <div class="todo-list" id="todoList"></div>
+
+    <div class="footer" id="footer" style="display:none">
+      <span class="footer-info" id="footerInfo"></span>
+      <div class="footer-actions">
+        <button class="text-btn" id="completeAllBtn">Complete All</button>
+        <button class="text-btn danger" id="clearDoneBtn">Clear Done</button>
+      </div>
+    </div>
   </div>
+  <div class="toast-container" id="toastContainer"></div>
+
+  <div class="modal-overlay" id="shortcutsModal">
+    <div class="modal">
+      <h2>⌨ Keyboard Shortcuts</h2>
+      <div class="shortcut-row">
+        <span>Add task</span>
+        <span class="shortcut-desc"><kbd class="kbd">Enter</kbd> in input</span>
+      </div>
+      <div class="shortcut-row">
+        <span>Focus search</span>
+        <span class="shortcut-desc"><kbd class="kbd">Ctrl</kbd> + <kbd class="kbd">F</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span>Focus new task</span>
+        <span class="shortcut-desc"><kbd class="kbd">Ctrl</kbd> + <kbd class="kbd">N</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span>Toggle theme</span>
+        <span class="shortcut-desc"><kbd class="kbd">Ctrl</kbd> + <kbd class="kbd">D</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span>Complete all</span>
+        <span class="shortcut-desc"><kbd class="kbd">Ctrl</kbd> + <kbd class="kbd">A</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span>Clear completed</span>
+        <span class="shortcut-desc"><kbd class="kbd">Ctrl</kbd> + <kbd class="kbd">Backspace</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span>Export JSON</span>
+        <span class="shortcut-desc"><kbd class="kbd">Ctrl</kbd> + <kbd class="kbd">E</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span>Close / cancel</span>
+        <span class="shortcut-desc"><kbd class="kbd">Esc</kbd></span>
+      </div>
+      <div class="shortcut-row">
+        <span>Edit task</span>
+        <span class="shortcut-desc">Double-click task text</span>
+      </div>
+      <div style="text-align:right;margin-top:20px">
+        <button class="text-btn" id="closeModal">Close</button>
+      </div>
+    </div>
+  </div>
+  
 </body>
 
 </html>
