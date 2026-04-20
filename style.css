@@ -28,7 +28,6 @@
   --shadow: 0 8px 40px rgba(100, 100, 180, .12);
 }
 
-
 *,
 *::before,
 *::after {
@@ -861,3 +860,73 @@ header {
   color: var(--muted);
 }
 
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes toastIn {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(1);
+  }
+
+  40% {
+    transform: scale(1.3);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.check-pop {
+  animation: checkPop .3s ease;
+}
+
+.todo-item.removing {
+  animation: slideIn .25s ease reverse forwards;
+}
+
+@media (max-width: 540px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .filter-tabs {
+    font-size: 11px;
+  }
+
+  .filter-tab {
+    padding: 5px 10px;
+  }
+
+  .header-actions .hint {
+    display: none;
+  }
+}
