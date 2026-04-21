@@ -260,3 +260,136 @@ function doAdd() {
   }
 }
 
+document.getElementById('taskInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') doAdd();
+});
+
+document.getElementById('addBtn').addEventListener('click', doAdd);
+
+document.getElementById('searchInput').addEventListener('input', e => {
+  search = e.target.value; render();
+});
+
+document.querySelectorAll('.filter-tab').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-tab').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filter = btn.dataset.filter;
+    render();
+  });
+});
+
+document.getElementById('sortSelect').addEventListener('change', e => {
+  sort = e.target.value; render();
+});
+
+// Footer actions
+document.getElementById('completeAllBtn').addEventListener('click', () => {
+  todos.forEach(t => t.done = true);
+  save(); render();
+  toast('All tasks completed!', 'success', '✓');
+});
+
+document.getElementById('clearDoneBtn').addEventListener('click', () => {
+  const n = todos.filter(t => t.done).length;
+  todos = todos.filter(t => !t.done);
+  selectedIds = new Set([...selectedIds].filter(id => todos.some(t => t.id === id)));
+  save(); render();
+  toast(`Cleared ${n} completed task${n !== 1 ? 's' : ''}.`, 'info', '🗑');
+});
+
+// Bulk actions
+document.getElementById('bulkComplete').addEventListener('click', () => {
+  selectedIds.forEach(id => { const t = todos.find(x => x.id === id); if (t) t.done = true; });
+  selectedIds.clear(); save(); render();
+  toast('Selected tasks completed.', 'success', '✓');
+});
+
+document.getElementById('bulkIncomplete').addEventListener('click', () => {
+  selectedIds.forEach(id => { const t = todos.find(x => x.id === id); if (t) t.done = false; });
+  selectedIds.clear(); save(); render();
+});
+
+document.getElementById('bulkDelete').addEventListener('click', () => {
+  const n = selectedIds.size;
+  todos = todos.filter(t => !selectedIds.has(t.id));
+  selectedIds.clear(); save(); render();
+  toast(`Deleted ${n} task${n !== 1 ? 's' : ''}.`, 'error', '🗑');
+});
+
+document.getElementById('bulkDeselect').addEventListener('click', () => {
+  selectedIds.clear(); render();
+});
+
+// Theme toggle
+let isDark = true;
+document.getElementById('themeBtn').addEventListener('click', () => {
+  isDark = !isDark;
+  document.body.classList.toggle('light', !isDark);
+  document.getElementById('themeBtn').textContent = isDark ? '🌙' : '☀️';
+});
+
+// Export
+document.getElementById('exportBtn').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify(todos, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `taskflow_${today()}.json`;
+  a.click();
+  toast('Exported tasks!', 'info', '⬇');
+});
+
+// Shortcuts modal
+document.getElementById('shortcutsBtn').addEventListener('click', () => {
+  document.getElementById('shortcutsModal').classList.add('open');
+});
+
+document.getElementById('closeModal').addEventListener('click', () => {
+  document.getElementById('shortcutsModal').classList.remove('open');
+});
+
+document.getElementById('shortcutsModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) e.currentTarget.classList.remove('open');
+});
+
+// Global keyboard shortcuts
+document.addEventListener('keydown', e => {
+  const tag = document.activeElement.tagName;
+  const isInput = ['INPUT', 'TEXTAREA', 'SELECT'].includes(tag) || document.activeElement.contentEditable === 'true';
+
+  if (e.key === 'Escape') {
+    document.getElementById('shortcutsModal').classList.remove('open');
+    selectedIds.clear(); render();
+    return;
+  }
+  if (e.key === '?' && !isInput) {
+    document.getElementById('shortcutsModal').classList.add('open'); return;
+  }
+  if (!e.ctrlKey && !e.metaKey) return;
+  if (e.key === 'f') { e.preventDefault(); document.getElementById('searchInput').focus(); }
+  if (e.key === 'n') { e.preventDefault(); document.getElementById('taskInput').focus(); }
+  if (e.key === 'd') { e.preventDefault(); document.getElementById('themeBtn').click(); }
+  if (e.key === 'e') { e.preventDefault(); document.getElementById('exportBtn').click(); }
+  if (e.key === 'a') { e.preventDefault(); document.getElementById('completeAllBtn').click(); }
+  if (e.key === 'Backspace') { e.preventDefault(); document.getElementById('clearDoneBtn').click(); }
+});
+
+load();
+
+// Seed with sample data on first run
+if (todos.length === 0) {
+  const samples = [
+    { text: 'Review project roadmap for Q3', priority: 'high', category: 'work', dueDate: today() },
+    { text: 'Complete JavaScript advanced module', priority: 'high', category: 'study', dueDate: '' },
+    { text: 'Morning jog — 5km', priority: 'medium', category: 'health', dueDate: '' },
+    { text: 'Buy groceries: eggs, milk, bread', priority: 'low', category: 'personal', dueDate: '' },
+    { text: 'Read "Clean Code" chapter 4', priority: 'medium', category: 'study', dueDate: '' },
+  ];
+  samples.reverse().forEach(s => {
+    todos.unshift({ id: uid(), text: s.text, done: false, ...s, createdAt: new Date().toISOString() });
+  });
+  todos[2].done = true; 
+  save();
+}
+
+render();
