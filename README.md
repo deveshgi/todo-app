@@ -139,7 +139,7 @@ Just open `index.html` in your browser
 
 **Devesh Kumar**
 
-* GitHub: https://github.com/your-username
+* GitHub: https://github.com/deveshgi
 
 ---
 
