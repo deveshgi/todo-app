@@ -35,8 +35,8 @@ function dueClass(dateStr) {
   return '';
 }
 
-function priOrder(p) { 
-  return { high: 0, medium: 1, low: 2 }[p] ?? 1; 
+function priOrder(p) {
+  return { high: 0, medium: 1, low: 2 }[p] ?? 1;
 }
 
 function toast(msg, type = 'info', icon = '·') {
@@ -210,7 +210,7 @@ function startEdit(el, t) {
   if (textEl.contentEditable === 'true') return;
   textEl.contentEditable = 'true';
   textEl.focus();
-  // move cursor to end
+
   const range = document.createRange();
   range.selectNodeContents(textEl);
   range.collapse(false);
@@ -375,21 +375,4 @@ document.addEventListener('keydown', e => {
 });
 
 load();
-
-// Seed with sample data on first run
-if (todos.length === 0) {
-  const samples = [
-    { text: 'Review project roadmap for Q3', priority: 'high', category: 'work', dueDate: today() },
-    { text: 'Complete JavaScript advanced module', priority: 'high', category: 'study', dueDate: '' },
-    { text: 'Morning jog — 5km', priority: 'medium', category: 'health', dueDate: '' },
-    { text: 'Buy groceries: eggs, milk, bread', priority: 'low', category: 'personal', dueDate: '' },
-    { text: 'Read "Clean Code" chapter 4', priority: 'medium', category: 'study', dueDate: '' },
-  ];
-  samples.reverse().forEach(s => {
-    todos.unshift({ id: uid(), text: s.text, done: false, ...s, createdAt: new Date().toISOString() });
-  });
-  todos[2].done = true; 
-  save();
-}
-
 render();
